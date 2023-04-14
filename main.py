@@ -34,12 +34,8 @@ with dataset:
     st.write(df.head())
 
 
-with feature: 
-    st.header('Features of this model')
-
-
 with model_training: 
-    st.header("Let's train our model")
+    
     freq_itemset = apriori(df, min_support = 0.042, use_colnames=True)
     rules = association_rules(freq_itemset, metric = 'confidence', min_threshold = 0.46)
 
@@ -47,6 +43,9 @@ with model_training:
 with customer_input: 
     st.header("Customers Choice: ")
 
-    user_input= st.text_input('Enter the product')
+    user_input= st.selectbox(
+            'Choose Product',
+            ['','bread', 'butter', 'cheese', 'coffee powder', 'ghee', 'lassi','milk','panner','sugar','sweet','tea powder','yougurt']
+        )
     user_input = user_input.lower()
     st.write(rules[rules['antecedents'] == {user_input}].iloc[:,[0,1,5]])
